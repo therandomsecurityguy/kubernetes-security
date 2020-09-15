@@ -3,7 +3,7 @@ kind: PodSecurityPolicy
 metadata:
   name: granted
   annotations:
-	seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
 spec:
   privileged: false
   allowPrivilegeEscalation: true
@@ -16,38 +16,10 @@ spec:
   hostPID: false
   readOnlyRootFilesystem: false
   runAsUser:
-	rule: 'RunAsAny'
+    rule: 'RunAsAny'
   seLinux:
-	rule: 'RunAsAny'
+    rule: 'RunAsAny'
   supplementalGroups:
-	rule: 'RunAsAny'
+  rule: 'RunAsAny'
   fsGroup:
-	rule: 'RunAsAny'
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: psp:granted
-  rules:
-- apiGroups:
-  - extensions
-  resourceNames:
-  - granted
-  resources:
-  - podsecuritypolicies
-  verbs:
-  - use
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: psp:any:granted
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: psp:granted
-subjects:
-- kind: Group
-  name: system:authenticated
-  apiGroup: rbac.authorization.k8s.io
-
+    rule: 'RunAsAny'
