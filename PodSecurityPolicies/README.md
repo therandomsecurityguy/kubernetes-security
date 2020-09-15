@@ -18,7 +18,7 @@ Pod Security Policies are evaluated based on access to the policy. When multiple
 2. If it is a pod creation request, then the first valid policy in alphabetical order is used.
 3. Otherwise, if it is a pod update request, an error is returned, because pod mutations are disallowed during update operations.
 
-In order to use a policy, the requesting user **or** target pod's service account must be authorized to use the policy, by allowing the *use* verb on the policy. So, when defining access rules for policies, we need to think about which user is creating/updating the Pod. The user is different if a Pod is created directly through *kubectl* or through a deployment.
+In order to use a policy, the requesting user **or** target pod's service account must be authorized to use the policy, by allowing the *use* verb on the policy. So, when defining access rules for policies, we need to think about which user is creating/updating the Pod. The user is different if a Pod is created directly through `kubectl` or through a deployment.
 
 First, make sure that any user has access to the *default* policy, which ensures that Pods will be unprivileged by default:
 
@@ -27,7 +27,7 @@ kubectl apply -f https://raw.githubusercontent.com/therandomsecurityguy/kubernet
 kubectl apply -f https://raw.githubusercontent.com/therandomsecurityguy/kubernetes-security/master/PodSecurityPolicies/default-psp.clusterrole.yaml
 ```
 
-Some Pods in the cluster, especially if *kube-apiserver*, *kube-controller-manager*, *kube-scheduler* or *etcd* are running inside the cluster, need privileged access. To ensure those services will still start after introducing the *PodSecurityPolicy* controller, we need to grant cluster nodes and the legacy kubelet user access to the privileged policy for the *kube-system* namespace. For this to work, make sure you've `--authorization-mode=Node,RBAC`:
+Some Pods in the cluster, especially if `kube-apiserver`, `kube-controller-manager`, `kube-scheduler` or `etcd` are running inside the cluster, need privileged access. To ensure those services will still start after introducing the `PodSecurityPolicy` controller, we need to grant cluster nodes and the legacy kubelet user access to the privileged policy for the `kube-system` namespace. For this to work, make sure you've `--authorization-mode=Node,RBAC`:
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/therandomsecurityguy/kubernetes-security/master/PodSecurityPolicies/privileged-psp.clusterrole.yaml
@@ -54,7 +54,7 @@ subjects:
 EOF
 ```
 
-Before enabling the *PodSecurityPolicy* controller you should check your namespaces for Pods requiring privileged access and create role bindings accordingly. If you're certain all Pods are covered you can add "PodSecurityPolicy" to `--admission-control=...` of your *kube-apiserver* configuration and restart the API.
+Before enabling the `PodSecurityPolicy` controller you should check your namespaces for Pods requiring privileged access and create role bindings accordingly. If you're certain all Pods are covered you can add "PodSecurityPolicy" to `--admission-control=...` of your `kube-apiserver` configuration and restart the API.
 
 You can test your setup by creating a deployment like this:
 
@@ -82,4 +82,4 @@ spec:
 EOF
 ```
 
-If all is fine, the *privileged* deployment should fail to create the Pod.
+If all is fine, the `privileged` deployment should fail to create the Pod.
