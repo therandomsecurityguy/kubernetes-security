@@ -1,13 +1,14 @@
 ### Pod Security Policies
 Most Pods do not need privileged access or even host access, so it should be ensured that a Pod requesting such access needs to be white listed explicitly. By default no one should be able to request privileges above the default to avoid being vulnerable through misconfiguration or malicious content of a Docker image.
 
-A basic setup consists of an unprivileged and a privileged policy. The unprivileged is called "default" and the privileged called "privileged".
+A basic setup consists of an unprivileged, privileged, and updated `granted` policy. The unprivileged is called `default`, the privileged called `privileged`, and the elevated, non-root policy called `granted` .
 
 With AppArmor:
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/therandomsecurityguy/kubernetes-security/master/PodSecurityPolicies/default.psp.yaml
 kubectl apply -f https://raw.githubusercontent.com/therandomsecurityguy/kubernetes-security/master/PodSecurityPolicies/privileged.psp.yaml
+kubectl apply -f https://raw.githubusercontent.com/therandomsecurityguy/kubernetes-security/master/PodSecurityPolicies/granted.psp.yaml
 
 ```
 
